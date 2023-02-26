@@ -9,11 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import pages.HomePage;
-
-<<<<<<< HEAD
 import static config.Utilities.*;
-=======
->>>>>>> c43625373466fcce4c7ce14eb0135e18ad906d4e
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
@@ -64,11 +60,11 @@ public class OrderFlowTest2 {
                 },
                 {"Ана", "Смит", "Москва Тверская 1 стр 1 кв 1",
                         "Тверская", "0017896543221",
-                        YESTERDAY, "6", "faster please", false
+                        YESTERDAY, "6", "faster please", false // Баг - заказ принимается на прошлую дату
                 },
                 {"Ан", "Сэ", "",
                         "Охотный ряд", "89076785123",
-                        NEXT_MONTH, "5", "" // Баг - поле адрес обязательное, но форма пропускает его незаполненным
+                        NEXT_MONTH, "5", "" , false // Баг - поле адрес обязательное, но форма пропускает его незаполненным
                 }
         };
     }
