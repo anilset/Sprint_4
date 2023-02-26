@@ -10,7 +10,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import pages.HomePage;
 
+<<<<<<< HEAD
 import static config.Utilities.*;
+=======
+>>>>>>> c43625373466fcce4c7ce14eb0135e18ad906d4e
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
