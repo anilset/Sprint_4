@@ -4,7 +4,5 @@
 .idea
 .build
 .target
-/idea
-/target
 /build
 
