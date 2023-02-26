@@ -1,4 +1,4 @@
-package pages;
+package OrderFlowTests;
 
 import config.Utilities;
 import org.junit.After;
@@ -8,6 +8,8 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import pages.HomePage;
+
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
