@@ -26,6 +26,7 @@ public class RentalDetailsPage {
         this.driver = driver;
     }
 
+    //в этом методе происходит клик на следующий месяц, дата всегда валидна
     public RentalDetailsPage selectDeliveryDate(String calendarRow, String calendarColumn ) {
         By dateSelect = By.xpath("//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div["
                 + calendarRow + "]/div[" + calendarColumn + "]");

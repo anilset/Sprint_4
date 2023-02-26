@@ -17,7 +17,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText1() throws InterruptedException {
+    public void compareAnswersFieldsText1() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Сутки — 400 рублей. Оплата курьеру — наличными или картой.",
@@ -25,7 +25,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText2() throws InterruptedException {
+    public void compareAnswersFieldsText2() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, " +
@@ -34,7 +34,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText3() throws InterruptedException {
+    public void compareAnswersFieldsText3() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в " +
@@ -45,7 +45,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText4() throws InterruptedException {
+    public void compareAnswersFieldsText4() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Только начиная с завтрашнего дня. Но скоро станем расторопнее.",
@@ -54,7 +54,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText5() throws InterruptedException {
+    public void compareAnswersFieldsText5() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку " +
@@ -63,7 +63,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText6() throws InterruptedException {
+    public void compareAnswersFieldsText6() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — " +
@@ -72,7 +72,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText7() throws InterruptedException {
+    public void compareAnswersFieldsText7() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Да, пока самокат не привезли. " +
@@ -81,7 +81,7 @@ public class HomePageFAQTest {
     }
 
     @Test
-    public void compareAnswersFieldsText8() throws InterruptedException {
+    public void compareAnswersFieldsText8() {
         HomePage homePage = new HomePage(driver);
         homePage.acceptCookies();
         assertEquals("Да, обязательно. Всем самокатов! И Москве, и Московской области.",

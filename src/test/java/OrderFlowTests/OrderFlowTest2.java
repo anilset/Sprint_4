@@ -1,4 +1,4 @@
-package pages;
+package OrderFlowTests;
 
 import config.Utilities;
 import org.junit.After;
@@ -8,6 +8,9 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import pages.HomePage;
+
+import static config.Utilities.*;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
@@ -21,16 +24,16 @@ public class OrderFlowTest2 {
     private final String calendarDate;
     private final String numberOfDays;
     private final String comment;
-    private boolean isOrderSubmitted;
+    private boolean isSubmitted;
+
 
     //В этом тесте вход с нижней кнопки, ввод даты с последующим выбором
 
-    public OrderFlowTest2 (
+    public OrderFlowTest2(
             String firstName, String lastName,
             String address, String station, String phoneNumber,
             String calendarDate,
-            String numberOfDays, String comment,
-            boolean isOrderSubmitted
+            String numberOfDays, String comment, boolean isSubmitted
     ) {
         this.firstName = firstName; //0
         this.lastName = lastName; //1
@@ -40,40 +43,33 @@ public class OrderFlowTest2 {
         this.calendarDate = calendarDate; //5
         this.numberOfDays = numberOfDays; //6
         this.comment = comment; //7
-        this.isOrderSubmitted = isOrderSubmitted; //8
+        this.isSubmitted = isSubmitted; //8
     }
-    @Parameterized.Parameters (name = "{index} : Имя {0}, Фамилия {1}, Адрес {2}, Метро {3}, Телефон {4}, Дата {5} ," +
-            "кол-во дней аренды {6}, Комментарий {7}, Размещен ли успешно заказ? {8}")
+
+    @Parameterized.Parameters(name = "{index} : Имя {0}, Фамилия {1}, Адрес {2}, Метро {3}, Телефон {4}, Дата {5} ," +
+            "кол-во дней аренды {6}, Комментарий {7}, Должен ли разместиться успешно такой заказ? {8}")
 
     public static Object[][] setOrderParams() {
-        return new Object[][] {
-                { "Ваня", "Кошкин" , "сивцев вражек 1 стр 1 д 1",
+        return new Object[][]{
+                {"Ваня", "Кошкин", "сивцев вражек 1 стр 1 д 1",
                         "Кропоткинская", "89764563423",
-                        "27.02.23", "7", "побыстрее", true
+                        TOMORROW, "7", "побыстрее", true
                 },
-                {"Жан", "Петров" , "Бутово 123456",
+                {"Жан", "Петров", "Бутово 123456",
                         "Адмирала Ушакова", "89076785123",
-                        "05.03.2023", "1", "", true
+                        TODAY, "1", "", false // Баг - на сегодня заказ сделать нельзя (см HomePage FAQ № 4)
                 },
-                {"Ана", "Смит" , "Москва Тверская 1 стр 1 кв 1",
+                {"Ана", "Смит", "Москва Тверская 1 стр 1 кв 1",
                         "Тверская", "0017896543221",
-                        "03/27/2023", "6", "faster please", true
-                },
-                {"Жан", "Петров" , "123456 Москва Ясеневская 3 д 8 кв 100",
-                        "Ясенево", "89076785123",
-                        "30/06.2023", "5", "", true
+                        YESTERDAY, "6", "faster please", false
                 },
                 {"Ан", "Сэ", "",
                         "Охотный ряд", "89076785123",
-                        "2023.03.21", "5", "", false //поле адрес обязательное, но форма пропускает его незаполненным
-                },
-                {"Лю", "Гэ", "Москва Ясеневская 3 д 8",
-                        "Охотный ряд", "89076785123",
-                        "07.03.2022", "5", "", false // возможно сделать заказ на прошлую дату
+                        NEXT_MONTH, "5", "" // Баг - поле адрес обязательное, но форма пропускает его незаполненным
                 }
-
         };
     }
+
     @Test
     public void checkOrderFlow2FF() {
         driver = new FirefoxDriver();
@@ -92,10 +88,11 @@ public class OrderFlowTest2 {
                 .pressSubmitButton()
                 .confirmOrder()
                 .isStatusButtonVisible();
-        assertTrue (isOrderSubmitted == isOrderSuccessful);
+        assertTrue(isOrderSuccessful == isSubmitted);
         //driver.quit();
 
     }
+
     @Test
     public void checkOrderFlow2Chrome() {
         driver = new ChromeDriver();
@@ -114,13 +111,12 @@ public class OrderFlowTest2 {
                 .pressSubmitButton()
                 .confirmOrder()
                 .isStatusButtonVisible();
-        assertTrue (isOrderSubmitted == isOrderSuccessful);
+        assertTrue(isOrderSuccessful == isSubmitted);
     }
 
     @After
     public void tearDown() {
         driver.quit();
     }
-    //аннотация не работает нормально c FireFox.
-    // также, никак не поучилось настроить Setup через WebDriverFactory для параметризванных тестов
 }
+    //аннотация не работает нормально c FireFox.
