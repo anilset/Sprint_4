@@ -1,19 +1,18 @@
 package OrderFlowTests;
 
-import config.Utilities;
+import extensions.WebDriverFactory;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import pages.HomePage;
 import static config.Utilities.*;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class OrderFlowTest2 {
+public class OrderFlowTest {
     private WebDriver driver;
     private final String firstName;
     private final String lastName;
@@ -25,10 +24,7 @@ public class OrderFlowTest2 {
     private final String comment;
     private boolean isSubmitted;
 
-
-    //В этом тесте вход с нижней кнопки, ввод даты с последующим выбором
-
-    public OrderFlowTest2(
+    public OrderFlowTest(
             String firstName, String lastName,
             String address, String station, String phoneNumber,
             String calendarDate,
@@ -64,48 +60,27 @@ public class OrderFlowTest2 {
                 },
                 {"Ан", "Сэ", "",
                         "Охотный ряд", "89076785123",
-                        NEXT_MONTH, "5", "" , false // Баг - поле адрес обязательное, но форма пропускает его незаполненным
+                        NEXT_YEAR, "5", "" , false // Баг - поле адрес обязательное, но форма пропускает его незаполненным
                 }
         };
     }
 
-    @Test
-    public void checkOrderFlow2FF() {
-        driver = new FirefoxDriver();
-        new Utilities().setUpFireFoxBonigarcia(driver);
-        boolean isOrderSuccessful = new HomePage(driver)
-                .navigateToHomePage()
-                .acceptCookies()
-                .pressLowerOrderButton() //зашли через нижнюю кнопку
-                .fillInTextFields(firstName, lastName, address, phoneNumber)
-                .selectMetroStation(station)
-                .clickProceedButton()
-                .inputDeliveryDate(calendarDate) // ввели дату и подтвердили
-                .setRentalDuration(numberOfDays)
-                .setGrayColorCheckBox() // выбрали серый
-                .leaveComment(comment)
-                .pressSubmitButton()
-                .confirmOrder()
-                .isStatusButtonVisible();
-        assertTrue(isOrderSuccessful == isSubmitted);
-        //driver.quit();
-
+    @Before
+    public void setUpDriver() {
+        driver = WebDriverFactory.getDriver();
     }
 
     @Test
-    public void checkOrderFlow2Chrome() {
-        driver = new ChromeDriver();
-        new Utilities().setUpChromeBonigarcia(driver);
+    public void checkOrderFlow() {
         boolean isOrderSuccessful = new HomePage(driver)
-                .navigateToHomePage()
                 .acceptCookies()
-                .pressLowerOrderButton() //зашли через нижнюю кнопку
+                .pressOrderButton()
                 .fillInTextFields(firstName, lastName, address, phoneNumber)
                 .selectMetroStation(station)
                 .clickProceedButton()
-                .inputDeliveryDate(calendarDate) // ввели дату и подтвердили
+                .inputDeliveryDate(calendarDate)
                 .setRentalDuration(numberOfDays)
-                .setGrayColorCheckBox() // выбрали серый
+                .setGrayColorCheckBox()
                 .leaveComment(comment)
                 .pressSubmitButton()
                 .confirmOrder()
@@ -118,4 +93,3 @@ public class OrderFlowTest2 {
         driver.quit();
     }
 }
-    //аннотация не работает нормально c FireFox.

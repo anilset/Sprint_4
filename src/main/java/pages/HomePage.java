@@ -7,14 +7,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+
 import static config.Utilities.URL;
 
 public class HomePage {
     private WebDriver driver;
-    private By upperOrderButton = By.className("Button_Button__ra12g");;
-    private By lowerOrderButton = By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[4]/div[2]/div[5]/button[1]");
-    private By cookieButton = By.cssSelector(".App_CookieButton__3cvqF");
     private By homeHeader = By.className("Home_Header__iJKdX");
+    private By orderButton = By.className("Button_Button__ra12g");;
+    private By cookieButton = By.cssSelector(".App_CookieButton__3cvqF");
+    private By accordionQuestButton = By.className("accordion__button");
     private WebElement FAQuest;
     private WebElement FAQanswer;
 
@@ -37,25 +38,16 @@ public class HomePage {
         return this;
     }
 
-    public OrderPage pressUpperOrderButton() {
-        driver.findElement(upperOrderButton).isEnabled();
-        driver.findElement(upperOrderButton).click();
-        new WebDriverWait(driver, Duration.ofSeconds(3)).
-                until(ExpectedConditions.visibilityOfElementLocated(OrderPage.getOrderForm()));
-        return new OrderPage(driver);
-    }
-
-    public OrderPage pressLowerOrderButton() {
-        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(lowerOrderButton));
+    public OrderPage pressOrderButton() {
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(orderButton));
         new WebDriverWait(driver, Duration.ofSeconds(5)).
-                until(ExpectedConditions.elementToBeClickable(lowerOrderButton)).click();
+                until(ExpectedConditions.elementToBeClickable(orderButton)).click();
         new WebDriverWait(driver, Duration.ofSeconds(5)).
                 until(ExpectedConditions.visibilityOfElementLocated(OrderPage.getOrderForm()));
         return new OrderPage(driver);
     }
 
     public String getAnswerToFAQ(int FAQnum) {
-        --FAQnum;
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",
                 FAQuest = driver.findElement(By.id("accordion__heading-" + FAQnum)));
 
@@ -70,5 +62,11 @@ public class HomePage {
         String answer = FAQanswer.getText();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         return answer;
+    }
+
+    public By getAccordionQuestButton() {
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",
+                driver.findElement(By.className("accordion__button")));
+        return accordionQuestButton;
     }
 }
