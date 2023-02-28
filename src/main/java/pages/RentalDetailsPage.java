@@ -6,13 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
+import static pages.OrderSubmittedConfirmationPage.viewStatusButton;
 
 public class RentalDetailsPage {
-    private WebDriver driver;
-    private WebElement colourCheckBox;
-    private static final By orderHeader = By.cssSelector(".Order_Content__bmtHS .Order_Header__BZXOb");
+    private final WebDriver driver;
+    public static final By orderHeader = By.cssSelector(".Order_Content__bmtHS .Order_Header__BZXOb");
     private final By deliveryDateInput = By.xpath("//input[@placeholder='* Когда привезти самокат']");
     private final By monthSelect = By.xpath("//button[@aria-label='Next Month']");
     private final By rentalTermField = By.cssSelector(".Dropdown-control");
@@ -62,7 +61,7 @@ public class RentalDetailsPage {
     }
 
     public RentalDetailsPage setColour(String colour) {
-        colourCheckBox = driver.findElement(By.id(colour));
+        WebElement colourCheckBox = driver.findElement(By.id(colour));
         colourCheckBox.isEnabled();
         colourCheckBox.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
@@ -89,11 +88,7 @@ public class RentalDetailsPage {
         driver.findElement(confirmationButton).isEnabled();
         driver.findElement(confirmationButton).click();
         new WebDriverWait(driver, Duration.ofSeconds(5)).
-                until(ExpectedConditions.visibilityOfElementLocated(OrderSubmittedConfirmationPage.getStatusButton()));
+                until(ExpectedConditions.visibilityOfElementLocated(viewStatusButton));
         return new OrderSubmittedConfirmationPage(driver);
-    }
-
-    public static By getOrderHeader() {
-        return orderHeader;
     }
 }

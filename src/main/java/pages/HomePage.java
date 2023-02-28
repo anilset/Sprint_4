@@ -8,27 +8,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-import static config.Utilities.URL;
+import static pages.OrderPage.orderForm;
 
 public class HomePage {
-    private WebDriver driver;
+    private final WebDriver driver;
     private WebElement FAQuest;
-    private WebElement FAQanswer;
-    private By homeHeader = By.className("Home_Header__iJKdX");
-    private By orderButton = By.cssSelector(".Button_Button__ra12g");
-    private By cookieButton = By.cssSelector(".App_CookieButton__3cvqF");
-    private By accordionQuestButton = By.className("accordion__button");
+    public static By homeHeader = By.className("Home_Header__iJKdX");
+    private final By orderButton = By.cssSelector(".Button_Button__ra12g");
+    private final By cookieButton = By.cssSelector(".App_CookieButton__3cvqF");
+    private final By accordionQuestButton = By.className("accordion__button");
 
     public HomePage (WebDriver driver) {
 
         this.driver = driver;
-    }
-
-    public HomePage navigateToHomePage() {
-        driver.navigate().to(URL);
-        new WebDriverWait(driver, Duration.ofSeconds(3)).until(driver -> (driver.findElement(homeHeader).getText() != null
-                && !driver.findElement(homeHeader).getText().isEmpty()));
-        return this;
     }
 
     public HomePage acceptCookies() {
@@ -43,7 +35,7 @@ public class HomePage {
         new WebDriverWait(driver, Duration.ofSeconds(5)).
                 until(ExpectedConditions.elementToBeClickable(orderButton)).click();
         new WebDriverWait(driver, Duration.ofSeconds(5)).
-                until(ExpectedConditions.visibilityOfElementLocated(OrderPage.getOrderForm()));
+                until(ExpectedConditions.visibilityOfElementLocated(orderForm));
         return new OrderPage(driver);
     }
 
@@ -57,7 +49,7 @@ public class HomePage {
         new WebDriverWait(driver, Duration.ofSeconds(5)).
                 until(ExpectedConditions.visibilityOfElementLocated(By.id("accordion__panel-" + FAQnum)));
 
-        FAQanswer = driver.findElement(By.id("accordion__panel-" + FAQnum));
+        WebElement FAQanswer = driver.findElement(By.id("accordion__panel-" + FAQnum));
         FAQanswer.isEnabled();
         String answer = FAQanswer.getText();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));

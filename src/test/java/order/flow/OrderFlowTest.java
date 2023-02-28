@@ -9,7 +9,7 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import pages.HomePage;
 import static config.Utilities.*;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class OrderFlowTest {
@@ -23,7 +23,7 @@ public class OrderFlowTest {
     private final String numberOfDays;
     private final String colour;
     private final String comment;
-    private boolean isSubmitted;
+    private final boolean isSubmitted;
 
     public OrderFlowTest(
             String firstName, String lastName,
@@ -54,8 +54,12 @@ public class OrderFlowTest {
                 },
                 {"Иван", "Кошкин", "Москва Сокольническая 1 стр 1 д 1",
                         "Сокольники", "89764563423",
-                        TOMORROW, "7", "grey", "побыстрее", true
+                        NEXT_MONTH, "7", "grey", "побыстрее", true
 
+                },
+                {"Ан", "Сэ", "",
+                        "Охотный ряд", "89076785123",
+                        NEXT_YEAR, "5", "black", "" , false // Баг - поле адрес обязательное, но форма пропускает его незаполненным
                 },
                 {"Жан", "Петров", "Бутово 123456",
                         "Адмирала Ушакова", "89076785123",
@@ -64,10 +68,6 @@ public class OrderFlowTest {
                 {"Ана", "Смит", "Москва Тверская 1 стр 1 кв 1",
                         "Тверская", "0017896543221",
                         YESTERDAY, "6", "grey", "faster please", false // Баг - заказ принимается на прошлую дату
-                },
-                {"Ан", "Сэ", "",
-                        "Охотный ряд", "89076785123",
-                        NEXT_YEAR, "5", "black", "" , false // Баг - поле адрес обязательное, но форма пропускает его незаполненным
                 }
         };
     }
@@ -90,7 +90,7 @@ public class OrderFlowTest {
                 .pressSubmitButton()
                 .confirmOrder()
                 .isStatusButtonVisible();
-        assertTrue(isOrderSuccessful == isSubmitted);
+        assertEquals (isSubmitted, isOrderSuccessful);
     }
 
     @After
