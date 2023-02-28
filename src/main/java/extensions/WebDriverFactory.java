@@ -1,6 +1,5 @@
 package extensions;
 
-import config.Utilities;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,6 +24,7 @@ public class WebDriverFactory {
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
                     driver = new FirefoxDriver();
+                    break;
                 default:
                     throw new RuntimeException("This browser is not supported yet");
             }

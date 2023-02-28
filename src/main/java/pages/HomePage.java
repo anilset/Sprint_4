@@ -12,12 +12,12 @@ import static config.Utilities.URL;
 
 public class HomePage {
     private WebDriver driver;
+    private WebElement FAQuest;
+    private WebElement FAQanswer;
     private By homeHeader = By.className("Home_Header__iJKdX");
     private By orderButton = By.cssSelector(".Button_Button__ra12g");
     private By cookieButton = By.cssSelector(".App_CookieButton__3cvqF");
     private By accordionQuestButton = By.className("accordion__button");
-    private WebElement FAQuest;
-    private WebElement FAQanswer;
 
     public HomePage (WebDriver driver) {
 

@@ -11,12 +11,11 @@ import java.time.Duration;
 
 public class RentalDetailsPage {
     private WebDriver driver;
+    private WebElement colourCheckBox;
     private static final By orderHeader = By.cssSelector(".Order_Content__bmtHS .Order_Header__BZXOb");
     private final By deliveryDateInput = By.xpath("//input[@placeholder='* Когда привезти самокат']");
     private final By monthSelect = By.xpath("//button[@aria-label='Next Month']");
     private final By rentalTermField = By.cssSelector(".Dropdown-control");
-    private final By blackColorCheckBox = By.id("black");
-    private final By grayColorCheckBox = By.id("grey");
     private final By commentInput = By.xpath("//input[@placeholder='Комментарий для курьера']");
     private final By submitButton = By.xpath("//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     private final By confirmationButton = By.xpath("//button[text()='Да']");
@@ -26,7 +25,6 @@ public class RentalDetailsPage {
         this.driver = driver;
     }
 
-    //в этом методе происходит клик на следующий месяц, дата всегда валидна
     public RentalDetailsPage selectDeliveryDate(String calendarRow, String calendarColumn ) {
         By dateSelect = By.xpath("//body[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div["
                 + calendarRow + "]/div[" + calendarColumn + "]");
@@ -63,14 +61,10 @@ public class RentalDetailsPage {
         return this;
     }
 
-    public RentalDetailsPage setBlackColorCheckBox() {
-        driver.findElement(blackColorCheckBox).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        return this;
-    }
-
-    public RentalDetailsPage setGrayColorCheckBox() {
-        driver.findElement(grayColorCheckBox).click();
+    public RentalDetailsPage setColour(String colour) {
+        colourCheckBox = driver.findElement(By.id(colour));
+        colourCheckBox.isEnabled();
+        colourCheckBox.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         return this;
     }
