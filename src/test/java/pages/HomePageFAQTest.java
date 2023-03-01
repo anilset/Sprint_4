@@ -24,7 +24,7 @@ public class HomePageFAQTest {
         this.numOfQuest = numOfQuest;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters (name = "{index} : Ответ {0}, номер вопроса {1}")
 
     public static Object[][] getFAQTestData() {
         return new Object[][] {
